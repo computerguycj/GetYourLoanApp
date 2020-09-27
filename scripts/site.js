@@ -111,7 +111,7 @@ function loadApplication() {
 
         var riskLabel = document.getElementById("riskSummary");
         riskLabel.style.display = "block";
-        riskLabel.innerText = generateRickProfile(la); 
+        riskLabel.innerText = generateRiskProfile(la); 
 
     }
 }
@@ -133,7 +133,7 @@ function saveApplication() {
 
         var riskLabel = document.getElementById("riskSummary");
         riskLabel.style.display = "block";
-        riskLabel.innerText = generateRickProfile(newLa);    
+        riskLabel.innerText = generateRiskProfile(newLa);    
 
         LoanApplicationList.push(newLa);
 
@@ -260,7 +260,7 @@ function validateApplication() {
     return valid;
 }
 
-function generateRickProfile(la) {
+function generateRiskProfile(la) {
     var risk = 3;
 
     var nameAndTitle = la.ApplicantName;
@@ -338,7 +338,10 @@ function generateRickProfile(la) {
     
     var reviewText = "";
 
-    if (age < 18) {
+    if (age < 0) {
+        reviewText = "your application is bogus, as you haven't even been born yet. Please come back when you exist.";
+    }
+    else if (age < 18) {
         reviewText = "your application will not be reviewed, because you have to be 18 years or older.";
     } else {
         reviewText = "your application will be reviewed.";
@@ -356,10 +359,7 @@ function generateRickProfile(la) {
         riskProfile = "high";
     }
 
-    var summaryText = "Dear " + la.ApplicantName + ", " + reviewText + " Your risk profile is " + riskProfile;
+    var summaryText = `Dear ${la.ApplicantName}, ${reviewText} Your risk profile is ${riskProfile}.`;
 
     return summaryText;
 }
-
-
-
